@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors</title>
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css">
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+</head>
+<body>
+    <h1>Rock, Paper, Scissors!</h1>
+    <p>Rock beats Scissors! Scissors beats Paper! Paper beats Rock!</p>
+
+    <label for="choice">What do you choose? Type 0 for Rock, 1 for Paper, or 2 for Scissors:</label>
+    <input type="number" id="choice" min="0" max="2">
+    <button id="play-button">Play!</button>
+
+    <p id="player-choice"></p>
+    <p id="computer-choice"></p>
+    <p id="result"></p>
+
+    <py-script>
+import random
+
+rock = '''rock
+    _______
+---'   ____)
+      (_____)
+      (_____)
+      (____)
+---.__(___)
+'''
+
+paper = '''paper
+     _______
+---'    ____)____
+           ______)
+          _______)
+         _______)
+---.__________)
+'''
+
+scissors = '''scissors
+    _______
+---'   ____)____
+          ______)
+       __________)
+      (____)
+---.__(___)
+'''
+
+game_images = [rock, paper, scissors]
+
+def play_game():
+    choice_element = Element("choice").element
+    player_choice = int(choice_element.value)
+    
+    if player_choice >= 3 or player_choice < 0:
+        Element("result").element.innerText = "Invalid number. You lose!"
+        return
+    
+    Element("player-choice").element.innerText = game_images[player_choice]
+    
+    computer_choice = random.randint(0, 2)
+    Element("computer-choice").element.innerText = f"Computer chose:\n{game_images[computer_choice]}"
+    
+    if player_choice == 0 and computer_choice == 1:
+        Element("result").element.innerText = "You lost!"
+    elif player_choice == 0 and computer_choice == 2:
+        Element("result").element.innerText = "You won!"
+    elif player_choice == 1 and computer_choice == 2:
+        Element("result").element.innerText = "You lost!"
+    elif player_choice == 1 and computer_choice == 0:
+        Element("result").element.innerText = "You won!"
+    elif player_choice == 2 and computer_choice == 1:
+        Element("result").element.innerText = "You won!"
+    elif player_choice == 2 and computer_choice == 0:
+        Element("result").element.innerText = "You lost!"
+    else:
+        Element("result").element.innerText = "It's a draw!"
+
+button = Element("play-button")
+button.element.onclick = play_game
+    </py-script>
+</body>
+</html>
